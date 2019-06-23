@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 package Controladores;
-
+import Modelos.ModeloUsuario;
+import Entidades.Usuario;
 /**
  *
  * @author MPC
  */
 public class ControladorUsuario {
-    public boolean login(String user,String password){
-        System.out.print(user+password);
-        return true;
+    public Usuario login(String user,String password){
+        ModeloUsuario login = new ModeloUsuario();
+        Usuario usuario = login.login(user, password);
+        return usuario;
     }
 }

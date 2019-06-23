@@ -16,5 +16,11 @@ public class Usuario {
  private String fecha;
  private String cargo;
  private boolean estado;
+ public void setEstado(){
+     this.estado = true;
+ }
+public boolean getEstado(){
+    return this.estado;
+ }
  
 }

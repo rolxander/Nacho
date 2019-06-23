@@ -5,6 +5,7 @@
  */
 package Vistas;
 import Controladores.ControladorUsuario;
+import Entidades.Usuario;
 /**
  *
  * @author MPC
@@ -104,7 +105,13 @@ public class Login extends javax.swing.JFrame {
         String userName = this.txtUser.getText();
         String userPassword = this.txtPassword.getText();
         ControladorUsuario login = new ControladorUsuario();
-        login.login(userName, userPassword);
+        Usuario usuario = login.login(userName, userPassword);
+        if(usuario.getEstado()){
+            System.out.println("el usuario existe");
+        }
+        else{
+            System.out.print("el usuario no existe");
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
