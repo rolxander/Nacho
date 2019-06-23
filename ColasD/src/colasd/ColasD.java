@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package colasd;
-
+import Vistas.Login;
 /**
  *
  * @author MPC
@@ -16,7 +16,8 @@ public class ColasD {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.print("hola mundo");
+        Login login = new Login();
+        login.setVisible(true);
     }
     
 }
