@@ -25,9 +25,9 @@ public class ModeloUsuario{
             Statement miStatement  = conexion.createStatement();
             ResultSet resultado = miStatement.executeQuery(query);//"select * from producto");
             Usuario usuario = new Usuario();
-            
             while(resultado.next()){
                 usuario.setEstado();
+                usuario.setCargo(resultado.getString("cargo"));
             }
             miStatement.close();
             conexion.close();

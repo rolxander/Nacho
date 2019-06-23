@@ -108,6 +108,11 @@ public class Login extends javax.swing.JFrame {
         Usuario usuario = login.login(userName, userPassword);
         if(usuario.getEstado()){
             System.out.println("el usuario existe");
+            if(usuario.getCargo().equals("administrador")){
+                System.out.println("Es un administrador");
+            }else{
+                System.out.println("es un simple cajero");
+            }
         }
         else{
             System.out.print("el usuario no existe");

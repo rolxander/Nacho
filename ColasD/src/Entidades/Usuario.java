@@ -22,5 +22,12 @@ public class Usuario {
 public boolean getEstado(){
     return this.estado;
  }
+
+public String getCargo(){
+    return this.cargo;
+}
+public void setCargo(String cargo){
+    this.cargo = cargo;
+}
  
 }
