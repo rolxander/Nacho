@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Vistas;
-
+import Controladores.ControladorUsuario;
 /**
  *
  * @author MPC
@@ -41,6 +41,11 @@ public class Login extends javax.swing.JFrame {
         JLPassword.setText("Password");
 
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,6 +98,14 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        String userName = this.txtUser.getText();
+        String userPassword = this.txtPassword.getText();
+        ControladorUsuario login = new ControladorUsuario();
+        login.login(userName, userPassword);
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
