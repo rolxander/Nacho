@@ -10,7 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Entidades.Usuario;
 import java.io.ObjectInputStream;
+import java.io.*;
 import Controladores.ControladorUsuario;
+import java.io.ObjectOutputStream;
 /**
  *
  * @author MPC
@@ -36,12 +38,14 @@ public class Servidor implements Runnable{
            usuario=controlador.login(nick, password);
            System.out.print(usuario.getCargo());
            misocket.close();
-           
+           //respuesta
+           Socket socketRespuesta = new Socket("192.168.1.128",8888);
+           ObjectOutputStream flujo_respuesta = new ObjectOutputStream(socketRespuesta.getOutputStream());
+           flujo_respuesta.writeObject(usuario);
+           flujo_respuesta.close();
            }    
-       } catch (IOException ex) {
-           Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-       } catch (ClassNotFoundException ex) {
-           Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (Exception ex) {
+            System.out.print(ex.getMessage());
        }
     }
     

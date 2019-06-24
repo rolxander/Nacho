@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Entidades.Usuario;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 
 /**
  *
@@ -112,15 +114,17 @@ public class Login extends javax.swing.JFrame{
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         try {
-            Socket misocket = new Socket("192.168.1.9",9999);
+            Socket misocket = new Socket("192.168.1.128",9999);
             String ci = this.txtUser.getText();
             String password = this.txtPassword.getText();
             Usuario usuario = new Usuario(ci,password);
             ObjectOutputStream flujo_salida = new ObjectOutputStream(misocket.getOutputStream());
             flujo_salida.writeObject(usuario);
-            flujo_salida.close();   
+            flujo_salida.close();
+            ServerSocket respuesta = new ServerSocket(8888);
+            Usuario usuario;
             
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.print(ex.getMessage());
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
