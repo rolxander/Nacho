@@ -4,29 +4,19 @@
  * and open the template in the editor.
  */
 package Vistas;
-//import Controladores.ControladorUsuario;
-//import Entidades.Usuario;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Controladores.ControladorUsuario;
 import Entidades.Usuario;
-import java.io.ObjectOutputStream;
-
 /**
  *
  * @author MPC
  */
-public class Login extends javax.swing.JFrame{
+public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
-        this.setVisible(true);
     }
 
     /**
@@ -111,20 +101,27 @@ public class Login extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        try {
-            Socket misocket = new Socket("192.168.1.9",9999);
-            String ci = this.txtUser.getText();
-            String password = this.txtPassword.getText();
-            Usuario usuario = new Usuario(ci,password);
-            ObjectOutputStream flujo_salida = new ObjectOutputStream(misocket.getOutputStream());
-            flujo_salida.writeObject(usuario);
-            flujo_salida.close();   
-            
-        } catch (IOException ex) {
-            System.out.print(ex.getMessage());
+        // TODO add your handling code here:
+        String userName = this.txtUser.getText();
+        String userPassword = this.txtPassword.getText();
+        ControladorUsuario login = new ControladorUsuario();
+        Usuario usuario = login.login(userName, userPassword);
+        if(usuario.getEstado()){
+            System.out.println("el usuario existe");
+            if(usuario.getCargo().equals("administrador")){
+                System.out.println("Es un administrador");
+            }else{
+                System.out.println("es un simple cajero");
+            }
+        }
+        else{
+            System.out.print("el usuario no existe");
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
