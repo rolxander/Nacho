@@ -19,10 +19,20 @@ public class Usuario implements Serializable {
     private String fecha;
     private String cargo;
     private String password;
-    private boolean estado;
-    private String Apellido;
+    private boolean estado=false;
     public Usuario(){
     };
+
+    public Usuario(String ci, String nombre, String apellido, String codigo, String fecha, String cargo) {
+        this.ci = ci;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.codigo = codigo;
+        this.fecha = fecha;
+        this.cargo = cargo;
+    }
+    
+    
 
     public Usuario(String ci, String password){
         this.setPassword(password);
