@@ -17,22 +17,21 @@ public class Usuario implements Serializable {
     private String apellido;
     private String codigo;
     private String fecha;
-    private String cargo;
-    private String password;
-    private boolean estado=false;
-    public Usuario(){
-    };
 
-    public Usuario(String ci, String nombre, String apellido, String codigo, String fecha, String cargo) {
+    public Usuario(String ci, String nombre, String apellido, String codigo, String fecha, String cargo, String password) {
         this.ci = ci;
         this.nombre = nombre;
         this.apellido = apellido;
         this.codigo = codigo;
         this.fecha = fecha;
         this.cargo = cargo;
+        this.password = password;
     }
-    
-    
+    private String cargo;
+    private String password;
+    private boolean estado;
+    public Usuario(){
+    };
 
     public Usuario(String ci, String password){
         this.setPassword(password);

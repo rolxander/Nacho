@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package Vistas;
-
+import Entidades.Usuario;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 /**
  *
  * @author MPC
@@ -42,10 +44,10 @@ public class GestionUsuarios extends javax.swing.JFrame {
         txtMes = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         txtCarnetIdentidad = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         selectCargo = new javax.swing.JComboBox();
         txtDia = new javax.swing.JTextField();
         txtAño = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -71,6 +73,12 @@ public class GestionUsuarios extends javax.swing.JFrame {
         jLabel8.setText("Cargo");
 
         selectCargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "cajero", "administrador" }));
+
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -102,16 +110,17 @@ public class GestionUsuarios extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCarnetIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCarnetIdentidad, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -197,7 +206,7 @@ public class GestionUsuarios extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,18 +237,37 @@ public class GestionUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
+        try{            Socket misocket = new Socket("192.168.1.9",9999);
+
             String nombre   = this.txtNombre.getText();
             String apellido = this.txtApellido.getText();
             String fecha    =  this.txtDia.getText()+"-"+this.txtMes.getText()+"-"+this.txtAño.getText();
             String ci       = this.txtCarnetIdentidad.getText();
+            String password = this.txtPassword.getText();
+            String cargo = "";
+            if(this.selectCargo.getSelectedIndex()==1){
+                 cargo = "administrador";
+            }else{
+                 cargo = "cajero";
+            }
+            String codigo = this.txtCodigo.getText();
             System.out.print(this.selectCargo.getSelectedIndex());
+            
+            Usuario usuario =new Usuario(ci,nombre,apellido,codigo,fecha,cargo,password); 
+            ObjectOutputStream flujo_salida = new ObjectOutputStream(misocket.getOutputStream());
+            flujo_salida.writeObject(usuario);
+            flujo_salida.close();
+            
         }catch
             (Exception e){
         
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,7 +327,7 @@ public class GestionUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtDia;
     private javax.swing.JTextField txtMes;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTable usersTable;
     // End of variables declaration//GEN-END:variables
 }
