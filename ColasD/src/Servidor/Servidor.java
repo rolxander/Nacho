@@ -36,9 +36,7 @@ public class Servidor implements Runnable{
            String nick = usuario.getCi();
            String password = usuario.getPassword();
            usuario=controlador.login(nick, password);
-           System.out.print(usuario.getCargo());
            misocket.close();
-           //respuesta
            Socket socketRespuesta = new Socket("192.168.1.128",8888);
            ObjectOutputStream flujo_respuesta = new ObjectOutputStream(socketRespuesta.getOutputStream());
            flujo_respuesta.writeObject(usuario);

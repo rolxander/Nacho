@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Entidades.Usuario;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -21,7 +22,7 @@ import java.net.ServerSocket;
  *
  * @author MPC
  */
-public class Login extends javax.swing.JFrame{
+public class Login extends javax.swing.JFrame implements Runnable{
 
     /**
      * Creates new form Login
@@ -29,6 +30,9 @@ public class Login extends javax.swing.JFrame{
     public Login() {
         initComponents();
         this.setVisible(true);
+        Thread mi_hilo = new Thread(this);
+        mi_hilo.start();
+        
     }
 
     /**
@@ -121,8 +125,7 @@ public class Login extends javax.swing.JFrame{
             ObjectOutputStream flujo_salida = new ObjectOutputStream(misocket.getOutputStream());
             flujo_salida.writeObject(usuario);
             flujo_salida.close();
-            ServerSocket respuesta = new ServerSocket(8888);
-            Usuario usuario;
+            
             
         } catch (Exception ex) {
             System.out.print(ex.getMessage());
@@ -169,4 +172,24 @@ public class Login extends javax.swing.JFrame{
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        try{
+            ServerSocket respuesta = new ServerSocket(8888);
+            Usuario usuario;
+            while(true){
+                Socket misocket = respuesta.accept();
+                ObjectInputStream flujo_entrada_respuesta = new ObjectInputStream(misocket.getInputStream());
+                usuario = (Usuario) flujo_entrada_respuesta.readObject();
+                misocket.close();
+                if(usuario.getEstado()){
+                    System.out.print("Welcome "+ usuario.getNombre());
+                }else{
+                    System.out.println("El usuario no fue encontrado pruebe nuevamente");
+                }
+            }
+        }
+        catch(Exception e){}
+    }
 }

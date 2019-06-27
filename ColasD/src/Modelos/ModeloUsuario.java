@@ -28,6 +28,10 @@ public class ModeloUsuario{
             while(resultado.next()){
                 usuario.setEstado();
                 usuario.setCargo(resultado.getString("cargo"));
+                usuario.setNombre(resultado.getString("nombre"));
+                usuario.setApellido(resultado.getString("apellido"));
+                usuario.setCi(resultado.getString("ci"));
+                usuario.setCodigo(resultado.getString("codigop"));
             }
             miStatement.close();
             conexion.close();
